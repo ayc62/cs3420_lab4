@@ -7,7 +7,10 @@
  * This structure holds the process structure information
  */
 struct process_state {
-	
+	unsigned int* sp;
+	unsigned int* original_sp;
+	unsigned int* size;
+	struct process_state* next;
 };
 
 /**
