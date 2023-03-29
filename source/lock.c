@@ -7,7 +7,7 @@ void l_init (lock_t* l) {
 }
 
 void l_lock (lock_t* l) {
-
+    
 }
 
 void l_unlock (lock_t* l) {
