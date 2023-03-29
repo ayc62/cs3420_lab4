@@ -3,34 +3,19 @@
 #include <MKL46Z4.h>
 #include "shared_structs.h"
 
-
-enum state {
-	ready,
-	finished
-};
-
-
-struct process_state {
-	unsigned int* sp;
-	unsigned int* original_sp;
-	unsigned int* size;
-	struct process_state* next;
-};
-
-
 process_t* process_queue = NULL;
 process_t* current_process = NULL;
 
 // add process p at the end of the process queue
-void enqueue(process_t* p) {
+void enqueue(process_t* p, process_t ** head) {
 	process_t* tmp;
 
-	if(process_queue == NULL) {
-		process_queue = p;
+	if(*head == NULL) {
+		*head = p;
 		p->next = NULL;
 	}
 	else {
-		tmp = process_queue;
+		tmp = *head;
 		while(tmp->next != NULL){
 			tmp = tmp->next;
 		}
@@ -40,14 +25,12 @@ void enqueue(process_t* p) {
 }
 
 // removes the first element from the queue, returns a pointer to the removed element.
-process_t* dequeue() {
+process_t* dequeue(process_t ** head) {
 	process_t* first;
+	first = *head;
 
-	if(process_queue == NULL){
-		first = NULL;
-	} else {
-		first = process_queue;
-		process_queue = process_queue->next;
+	if(*head != NULL){
+		*head = *head->next;
 	}
 
 	return first;
@@ -67,7 +50,7 @@ int process_create (void (*f)(void), int n){
 		new_process->size = n;
 		new_process->sp = sp; // set current sp 
 		new_process->next = NULL; // set next pointer NULL
-		enqueue(new_process); // enqueue new process
+		enqueue(new_process, &process_queue); // enqueue new process
 		return 0;
 	}
 
@@ -110,7 +93,7 @@ unsigned int * process_select (unsigned int * cursp) {
 	//it is not null), and put it at the end of the queue.
 	if(cursp != NULL) {	// update current process if cursp not complete
 		current_process->sp = cursp;
-		enqueue(current_process);
+		enqueue(current_process, &process_queue);
 
 	// free current process if no process is running
 	} else if (cursp == NULL && current_process != NULL){
@@ -122,7 +105,7 @@ unsigned int * process_select (unsigned int * cursp) {
 	if(process_queue == NULL) {
 		return NULL;
 	} else {
-		current_process = dequeue();
+		current_process = dequeue(&process_queue);
 		return current_process->sp;
 	}
 }
