@@ -10,9 +10,7 @@ struct process_state {
 	unsigned int* sp;
 	unsigned int* original_sp;
 	unsigned int* size;
-	struct process_state* next;
-
-	int has_lock;
+	process_t* next;
 
 	//1 if this is a process trying to acquire a lock that is being used by another process
 	int is_blocked;
@@ -25,7 +23,7 @@ typedef struct lock_state {
 	
 	//1 if this lock is free, 0 if not
 	int free;
-	struct process_state* blocked_queue;
+	process_t* blocked_queue;
 
 
 

@@ -29,10 +29,9 @@ void enqueue(process_t* p, process_t** queue) {
 process_t* dequeue(process_t** queue) {
 	process_t* first;
 
-	if(*queue == NULL){
-		first = NULL;
-	} else {
-		first = (*queue);
+	first = (*queue);
+
+	if(*queue != NULL){
 		(*queue) = (*queue)->next;
 	}
 
@@ -55,11 +54,6 @@ int process_create (void (*f)(void), int n){
 		new_process->next = NULL; // set next pointer NULL
 		new_process->is_blocked = 0;
 		enqueue(new_process, &process_queue); // enqueue new process
-
-//		process_t* tmp = process_queue;
-//				while(tmp->next != NULL) {
-//					tmp = tmp->next;
-//				}
 
 		return 0;
 	}
@@ -104,7 +98,11 @@ unsigned int * process_select (unsigned int * cursp) {
 	//it is not null), and put it at the end of the queue.
 	if(cursp != NULL) {	// update current process if cursp not complete
 		current_process->sp = cursp;
-		enqueue(current_process, &process_queue);
+
+		// only add process if it's not blocked
+		if (!(current_process->is_blocked)) {
+			enqueue(current_process, &process_queue);
+		}
 
 	// free current process if no process is running
 	} else if (cursp == NULL && current_process != NULL){
@@ -114,15 +112,16 @@ unsigned int * process_select (unsigned int * cursp) {
 
 
 	if(process_queue == NULL) {
+		current_process = NULL;
 		return NULL;
 	} else {
 		current_process = dequeue(&process_queue);
 
 		//check if this is a blocked process
-		if(current_process->is_blocked == 1) {
-			enqueue(current_process, &process_queue);
-			current_process = dequeue(&process_queue);
-		}
+		// if(current_process->is_blocked == 1) {
+		// 	enqueue(current_process, &process_queue);
+		// 	current_process = dequeue(&process_queue);
+		// }
 
 		return current_process->sp;
 	}
