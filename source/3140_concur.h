@@ -112,5 +112,9 @@ void process_stack_free (unsigned int *sp, int n);
 
 extern void process_begin (void);
 
+void enqueue(process_t* p, process_t** queue);
+
+process_t* dequeue(process_t** queue);
+
 
 #endif

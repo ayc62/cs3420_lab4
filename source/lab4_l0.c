@@ -26,6 +26,27 @@ void p1(void){
 	}
 }
 
+
+void p2(void){
+	int i= 0;
+	while(i < 3){
+		/*NCS*/
+		delay();
+		i++;
+		/*CS*/
+		l_lock(&l);
+		LEDRed_Toggle();
+		delay();
+		LEDRed_Toggle();
+		delay();
+		LEDGreen_Toggle();
+		delay();
+		LEDGreen_Toggle();
+		delay();
+		l_unlock(&l);
+	}
+}
+
 int main(void){
 	LED_Initialize();           /* Initialize the LEDs           */	
 
@@ -34,7 +55,7 @@ int main(void){
 	if (process_create (p1,20) < 0) {
 	 	return -1;
 	}
-	if (process_create (p1,20) < 0) {
+	if (process_create (p2,20) < 0) {
 	 	return -1;
 	}
 	

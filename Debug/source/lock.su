@@ -2,4 +2,4 @@ C:\Users\alkim\Documents\MCUXpressoIDE_11.7.0_9198\workspace\3420_lab4\CMSIS/cor
 C:\Users\alkim\Documents\MCUXpressoIDE_11.7.0_9198\workspace\3420_lab4\CMSIS/core_cm0plus.h:769:22:__NVIC_DisableIRQ	16	static
 ../source/lock.c:4:6:l_init	16	static
 ../source/lock.c:10:6:l_lock	16	static
-../source/lock.c:25:6:l_unlock	24	static
+../source/lock.c:32:6:l_unlock	24	static

@@ -5,9 +5,9 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../source/3140_concur.c \
-../source/lab4_l0.c \
 ../source/lock.c \
 ../source/process.c \
+../source/test_l1.c \
 ../source/utils.c 
 
 S_SRCS += \
@@ -15,17 +15,17 @@ S_SRCS += \
 
 C_DEPS += \
 ./source/3140_concur.d \
-./source/lab4_l0.d \
 ./source/lock.d \
 ./source/process.d \
+./source/test_l1.d \
 ./source/utils.d 
 
 OBJS += \
 ./source/3140.o \
 ./source/3140_concur.o \
-./source/lab4_l0.o \
 ./source/lock.o \
 ./source/process.o \
+./source/test_l1.o \
 ./source/utils.o 
 
 
@@ -48,7 +48,7 @@ source/%.o: ../source/%.c source/subdir.mk
 clean: clean-source
 
 clean-source:
-	-$(RM) ./source/3140.o ./source/3140_concur.d ./source/3140_concur.o ./source/lab4_l0.d ./source/lab4_l0.o ./source/lock.d ./source/lock.o ./source/process.d ./source/process.o ./source/utils.d ./source/utils.o
+	-$(RM) ./source/3140.o ./source/3140_concur.d ./source/3140_concur.o ./source/lock.d ./source/lock.o ./source/process.d ./source/process.o ./source/test_l1.d ./source/test_l1.o ./source/utils.d ./source/utils.o
 
 .PHONY: clean-source
 

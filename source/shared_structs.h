@@ -25,8 +25,6 @@ typedef struct lock_state {
 	int free;
 	process_t* blocked_queue;
 
-
-
 } lock_t;
 
 

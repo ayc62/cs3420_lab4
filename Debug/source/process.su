@@ -1,6 +1,6 @@
 C:\Users\alkim\Documents\MCUXpressoIDE_11.7.0_9198\workspace\3420_lab4\CMSIS/core_cm0plus.h:733:22:__NVIC_EnableIRQ	16	static
 ../source/process.c:11:6:enqueue	24	static
 ../source/process.c:29:12:dequeue	24	static
-../source/process.c:44:5:process_create	24	static
-../source/process.c:74:6:process_start	8	static
-../source/process.c:101:16:process_select	16	static
+../source/process.c:43:5:process_create	24	static
+../source/process.c:68:6:process_start	8	static
+../source/process.c:95:16:process_select	16	static

@@ -21,12 +21,13 @@ void l_lock(lock_t* l){
 		current_process->is_blocked = 1;
 		enqueue(current_process, &(l->blocked_queue));
 		process_blocked(); // enables global interrupts
-		NVIC_DisableIRQ(PIT_IRQn); // do we need this?
+		//NVIC_DisableIRQ(PIT_IRQn); // do we need this?
 	}
+
+	l->free = 0;
 
 	NVIC_EnableIRQ(PIT_IRQn); // enable interrupts
 }
-
 
 void l_unlock(lock_t* l) {
 
@@ -35,12 +36,15 @@ void l_unlock(lock_t* l) {
 	// remove next process from blocked queue
 	// unblock next process
 	// add next process to the process queue
-	if(l->blocked_queue != NULL) {
-		process_t* p = dequeue(&(l->blocked_queue));
-		p->is_blocked = 0;
-		enqueue(p, &process_queue);
+
+	if(!(l->free)) {
+		if(l->blocked_queue != NULL) {
+			process_t* p = dequeue(&(l->blocked_queue));
+			p->is_blocked = 0;
+			enqueue(p, &process_queue);
+		}
 	}
 
-	l->free = 1; // free the lock 
+	l->free = 1; // free the lock
 	NVIC_EnableIRQ(PIT_IRQn); // enable interrupts
 }
